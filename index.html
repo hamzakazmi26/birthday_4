@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Someone Special</title>
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+    
+    body {
+      background-color: #fff5f7;
+      color: #333;
+      overflow-x: hidden;
+      transition: background-color 0.5s;
+    }
+    
+    /* Password Screen */
+    .password-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ff6b8b, #ff8e53);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      color: white;
+      text-align: center;
+    }
+    
+    .password-screen h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+    
+    .password-screen input {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 50px;
+      margin: 20px 0;
+      font-size: 1.2rem;
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+    }
+    
+    .password-screen button {
+      background-color: white;
+      color: #ff6b8b;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .password-screen button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    /* Page Container */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      display: none;
+    }
+    
+    /* Cake Page */
+    #cake-page {
+      background: linear-gradient(135deg, #ffcce6, #ffb3d9);
+    }
+    
+    .cake {
+      font-size: 150px;
+      cursor: pointer;
+      margin-bottom: 30px;
+      transition: transform 0.3s;
+    }
+    
+    .cake:hover {
+      transform: scale(1.1);
+    }
+    
+    .instructions {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #d6336c;
+    }
+    
+    /* Balloon and Fireworks */
+    .balloon {
+      position: absolute;
+      width: 60px;
+      height: 80px;
+      border-radius: 50%;
+      animation: float linear infinite;
+      z-index: 1;
+      opacity: 0;
+    }
+    
+    .balloon::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 30px;
+      width: 2px;
+      height: 40px;
+      background-color: rgba(0,0,0,0.2);
+    }
+    
+    .firework {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      animation: explode 1s ease-out infinite;
+      z-index: 1;
+      opacity: 0;
+    }
+    
+    @keyframes float {
+      to {
+        transform: translateY(-100vh);
+      }
+    }
+    
+    @keyframes explode {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(20);
+        opacity: 0;
+      }
+    }
+    
+    /* Wish Page */
+    #wish-page {
+      background: linear-gradient(135deg, #d4b8ff, #b388ff);
+      color: white;
+    }
+    
+    .wish-container {
+      background-color: rgba(255,255,255,0.9);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 600px;
+      color: #333;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .wish-container h2 {
+      color: #7b2cbf;
+      margin-bottom: 20px;
+    }
+    
+    .wish-text {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    /* Quiz Page */
+    #quiz-page {
+      background: linear-gradient(135deg, #a5d8ff, #74c0fc);
+    }
+    
+    .quiz-container {
+      background-color: rgba(255,255,255,0.9);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 600px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .quiz-question {
+      margin-bottom: 30px;
+    }
+    
+    .quiz-question h3 {
+      margin-bottom: 15px;
+      color: #1971c2;
+    }
+    
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .quiz-option {
+      padding: 12px;
+      background-color: #f1f3f5;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .quiz-option:hover {
+      background-color: #e9ecef;
+    }
+    
+    .quiz-option.selected {
+      background-color: #1971c2;
+      color: white;
+    }
+    
+    /* Results Page */
+    #results-page {
+      background: linear-gradient(135deg, #96f2d7, #63e6be);
+    }
+    
+    .results-container {
+      background-color: rgba(255,255,255,0.9);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 600px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .results-container h2 {
+      color: #0ca678;
+      margin-bottom: 20px;
+    }
+    
+    .score {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    
+    .final-message {
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+    
+    /* Navigation Buttons */
+    .nav-button {
+      margin-top: 30px;
+      padding: 12px 30px;
+      background-color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .nav-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .cake {
+        font-size: 100px;
+      }
+      
+      .wish-container, .quiz-container, .results-container {
+        padding: 20px;
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Password Screen -->
+  <div class="password-screen" id="passwordScreen">
+    <h2>🔒 Special Birthday Access</h2>
+    <p>Enter the secret password to continue</p>
+    <input type="password" id="passwordInput" placeholder="Our special word...">
+    <button onclick="checkPassword()">Unlock</button>
+  </div>
+  
+  <!-- Cake Page -->
+  <div class="page" id="cake-page">
+    <div class="cake">🎂</div>
+    <h2>Tap the cake to begin!</h2>
+    <p class="instructions">Make a wish before you tap!</p>
+    <audio id="birthdaySong" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+  </div>
+  
+  <!-- Wish Page -->
+  <div class="page" id="wish-page">
+    <div class="wish-container">
+      <h2>To Someone Special 💖</h2>
+      <div class="wish-text">
+        <p>On this beautiful day, I want you to know how much you mean to me.</p>
+        <p>Your smile brightens my darkest days, and your love fills my heart with joy.</p>
+        <p>May this year bring you all the happiness you deserve, and may we share many more beautiful moments together.</p>
+        <p>You are the most amazing person I know, and I'm so grateful to have you in my life.</p>
+      </div>
+    </div>
+    <button class="nav-button" onclick="nextPage('wish-page', 'quiz-page')">Continue to Quiz</button>
+  </div>
+  
+  <!-- Quiz Page -->
+  <div class="page" id="quiz-page">
+    <div class="quiz-container">
+      <h2>How Well Do You Know Me? 🤔</h2>
+      
+      <div class="quiz-question">
+        <h3>1. What's my favorite color?</h3>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="selectAnswer(this, 1, 'a')">Blue</div>
+          <div class="quiz-option" onclick="selectAnswer(this, 1, 'b')">Pink</div>
+        </div>
+      </div>
+      
+      <div class="quiz-question">
+        <h3>2. What's my favorite food?</h3>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="selectAnswer(this, 2, 'a')">Pizza</div>
+          <div class="quiz-option" onclick="selectAnswer(this, 2, 'b')">Sushi</div>
+        </div>
+      </div>
+      
+      <div class="quiz-question">
+        <h3>3. What's my dream vacation?</h3>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="selectAnswer(this, 3, 'a')">Beach resort</div>
+          <div class="quiz-option" onclick="selectAnswer(this, 3, 'b')">Mountain cabin</div>
+        </div>
+      </div>
+      
+      <div class="quiz-question">
+        <h3>4. What's my favorite season?</h3>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="selectAnswer(this, 4, 'a')">Summer</div>
+          <div class="quiz-option" onclick="selectAnswer(this, 4, 'b')">Winter</div>
+        </div>
+      </div>
+      
+      <div class="quiz-question">
+        <h3>5. What quality do I value most in people?</h3>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="selectAnswer(this, 5, 'a')">Honesty</div>
+          <div class="quiz-option" onclick="selectAnswer(this, 5, 'b')">Kindness</div>
+        </div>
+      </div>
+    </div>
+    <button class="nav-button" onclick="showResults()">See Results</button>
+  </div>
+  
+  <!-- Results Page -->
+  <div class="page" id="results-page">
+    <div class="results-container">
+      <h2>Quiz Results 🎯</h2>
+      <div class="score" id="score-display">You got 3 out of 5 correct!</div>
+      <div class="final-message">
+        <p>Thank you for playing this little game! No matter how many you got right, what matters most is that you tried.</p>
+        <p>Every moment with you is special, and I cherish all our memories together.</p>
+        <p>Here's to many more birthdays, laughter, and love shared between us. Happy Birthday, my love! 💝</p>
+      </div>
+    </div>
+    <button class="nav-button" onclick="restartExperience()">Start Over</button>
+  </div>
+  
+  <script>
+    // Password Protection
+    function checkPassword() {
+      const password = document.getElementById('passwordInput').value.toLowerCase();
+      // Change this password to your special word
+      if (password === 'forever' || password === 'ourpassword') {
+        document.getElementById('passwordScreen').style.display = 'none';
+        showPage('cake-page');
+      } else {
+        alert('Incorrect password. Try again!');
+      }
+    }
+    
+    // Page Navigation
+    function showPage(pageId) {
+      document.getElementById(pageId).style.display = 'flex';
+    }
+    
+    function nextPage(currentPageId, nextPageId) {
+      document.getElementById(currentPageId).style.display = 'none';
+      document.getElementById(nextPageId).style.display = 'flex';
+    }
+    
+    function restartExperience() {
+      document.getElementById('results-page').style.display = 'none';
+      document.getElementById('cake-page').style.display = 'flex';
+      resetQuiz();
+    }
+    
+    // Cake Interaction
+    const cake = document.querySelector('.cake');
+    const birthdaySong = document.getElementById('birthdaySong');
+    
+    cake.addEventListener('click', function() {
+      // Start birthday song
+      birthdaySong.play();
+      
+      // Create balloons
+      createBalloons();
+      
+      // Create fireworks
+      createFireworks();
+      
+      // Show message after animation
+      setTimeout(function() {
+        birthdaySong.pause();
+        nextPage('cake-page', 'wish-page');
+      }, 10000); // 10 seconds
+    });
+    
+    // Balloon and Fireworks Animation
+    function createBalloons() {
+      const colors = ['#ff6b6b', '#ff8e8e', '#4CAF50', '#2196F3', '#FFC107', '#9C27B0'];
+      
+      for (let i = 0; i < 20; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.style.left = Math.random() * 100 + 'vw';
+        balloon.style.bottom = '-100px';
+        balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        balloon.style.animationDuration = Math.random() * 10 + 10 + 's';
+        balloon.style.animationDelay = Math.random() * 3 + 's';
+        balloon.style.opacity = '1';
+        document.getElementById('cake-page').appendChild(balloon);
+        
+        // Remove balloon after animation
+        setTimeout(() => {
+          balloon.remove();
+        }, 15000);
+      }
+    }
+    
+    function createFireworks() {
+      for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+          const firework = document.createElement('div');
+          firework.className = 'firework';
+          firework.style.left = Math.random() * 100 + 'vw';
+          firework.style.top = Math.random() * 100 + 'vh';
+          firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+          firework.style.opacity = '1';
+          document.getElementById('cake-page').appendChild(firework);
+          
+          // Remove firework after animation
+          setTimeout(() => {
+            firework.remove();
+          }, 1000);
+        }, i * 600);
+      }
+    }
+    
+    // Quiz Functionality
+    const answers = {
+      1: 'b', // Change these to correct answers
+      2: 'a',
+      3: 'b',
+      4: 'a',
+      5: 'b'
+    };
+    
+    const userAnswers = {};
+    
+    function selectAnswer(element, questionNumber, answer) {
+      // Remove selected class from all options in this question
+      const options = element.parentElement.querySelectorAll('.quiz-option');
+      options.forEach(opt => opt.classList.remove('selected'));
+      
+      // Add selected class to clicked option
+      element.classList.add('selected');
+      
+      // Store user's answer
+      userAnswers[questionNumber] = answer;
+    }
+    
+    function showResults() {
+      let score = 0;
+      
+      // Calculate score
+      for (const question in answers) {
+        if (userAnswers[question] === answers[question]) {
+          score++;
+        }
+      }
+      
+      // Display score
+      document.getElementById('score-display').textContent = `You got ${score} out of 5 correct!`;
+      
+      // Show results page
+      nextPage('quiz-page', 'results-page');
+    }
+    
+    function resetQuiz() {
+      // Clear all selected answers
+      const selectedOptions = document.querySelectorAll('.quiz-option.selected');
+      selectedOptions.forEach(opt => opt.classList.remove('selected'));
+      
+      // Reset userAnswers object
+      for (const question in userAnswers) {
+        delete userAnswers[question];
+      }
+      
+      // Reset cake page
+      birthdaySong.currentTime = 0;
+    }
+  </script>
+</body>
+</html>
